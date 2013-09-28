@@ -50,7 +50,10 @@ def monkey_patch_where_node():
 
     # Update the operators accepted by a query when adding filters by adding those of unaccent
     # This way, it passes the test at db/models/sql/query.py:1021 which otherwise will override our custom lookup_types
-    Query.query_terms.update(izip(UnaccentOperation.operators.keys() + UnaccentOperation.smart_operators, repeat(None)))
+
+    #removed for compatibility with v1.5
+    #Query.query_terms.update(izip(UnaccentOperation.operators.keys() + UnaccentOperation.smart_operators, repeat(None)))
+    Query.query_terms.update(UnaccentOperation.operators.keys() + UnaccentOperation.smart_operators)
     WhereNode.add = patched_wherenode_add
 
 
